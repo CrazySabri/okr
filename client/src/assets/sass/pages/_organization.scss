@@ -1,0 +1,24 @@
+.page-organization {
+  .wrap--page {
+    position:relative;
+  }
+}
+.page-organization_body {
+  width:700px;
+  height:2000px;
+  position:relative;
+  left:220px;
+}
+.page-organization_content {
+  background: white;
+  padding:24px;
+  min-height: 200px;
+  + .page-organization_content {
+    margin-top:24px;
+  }
+}
+.page-organization_sidebar {
+  float:left;
+  position:fixed;
+  width:300px;
+}

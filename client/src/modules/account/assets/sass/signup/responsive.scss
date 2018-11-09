@@ -1,0 +1,42 @@
+@media screen and (max-width: 767px) {
+  .signup {
+    &-form {
+      h3 {
+        font-size:14px;
+        margin-bottom:16px;
+      }
+    }
+    &-header {
+      height:113px;
+      &_logo {
+        padding:30px;
+        img {
+          width:164px;
+        } 
+      }
+    }
+  }
+}
+  
+@media screen and (max-width: 480px) {
+  .signup-form_group {
+    font-size:12px;
+    &_forgotPassword {
+      display:none;
+    }
+  }
+  .signup-wrapper {
+    width:calc(100% - 48px);
+  }
+  .signup-footer {
+    .signup-form_group_forgotPassword {
+      display:block;
+      float:none;
+    }
+  }
+}
+@media screen and (max-width: 360px) {
+  .signup-body {
+    padding: 30px 15px;
+  }
+}

@@ -1,0 +1,34 @@
+@media screen and (max-width: 767px) {
+  .login-header {
+    height:113px;
+    &_logo {
+      padding:30px;
+      img {
+        width:164px;
+      } 
+    }
+  }
+}
+  
+@media screen and (max-width: 480px) {
+  .login-form_group {
+    font-size:12px;
+    &_forgotPassword {
+      display:none;
+    }
+  }
+  .login-wrapper {
+    width:calc(100% - 48px);
+  }
+  .login-footer {
+    .login-form_group_forgotPassword {
+      display:block;
+      float:none;
+    }
+  }
+}
+@media screen and (max-width: 360px) {
+  .login-body {
+    padding: 30px 15px;
+  }
+}

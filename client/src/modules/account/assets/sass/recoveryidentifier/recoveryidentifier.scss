@@ -1,0 +1,43 @@
+.recoveryidentifier {
+  &-wrapper {
+    width: 348px;
+    max-width: 348px;
+    margin: 0 auto;
+  }
+
+  &-header {
+    height:154px;
+
+    &_logo {
+      padding:50px;
+      text-align:center;
+      img {
+        height:auto;
+        width:240px;
+      }
+    }
+  }
+  &-footer {
+    hr {
+      background:#f5f5f5;
+      border:none;
+      height:1px;
+      margin: 30px 40px 15px;
+    }
+    p {
+      text-align:center;
+      + p {
+        margin-top:12px;
+      }
+    }
+    a {
+      color: #aeaeae;
+      font-size:12px;
+      line-height:16px;
+      text-decoration: none;
+      &:hover {
+        color:#{$main-color};
+      }
+    }
+  }
+}

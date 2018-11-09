@@ -1,0 +1,37 @@
+.avatar-user {
+  width:56px;
+  height:56px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  img {
+    width:100%;
+    height: auto;
+    vertical-align: middle;
+    display: block;
+  }
+  &.size--small {
+    width:32px;
+    height: 32px;
+  }
+  &.size--sidebar {
+    width:40px;
+    height: 40px;
+  }
+  &.size--timeline {
+    width:40px;
+    height: 40px;
+  }
+  &.size--comment {
+    width:40px;
+    height: 40px;
+  }
+  &.size--profile {
+    width:70px;
+    height: 70px;
+  }
+  &.size--sidebarprofile {
+    width:96px;
+    height: 96px;
+  }
+}

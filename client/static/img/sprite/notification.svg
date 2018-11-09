@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_24px_49</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11,4.07088886 L11,3.5 C11,2.94771525 11.4477153,2.5 12,2.5 C12.5522847,2.5 13,2.94771525 13,3.5 L13,4.07088886 C16.3922941,4.55611852 19,7.47352809 19,11 L19,17 L20,17 C20.5522847,17 21,17.4477153 21,18 C21,18.5522847 20.5522847,19 20,19 L15.8739825,19 C15.4299397,20.7252272 13.8638394,22 12,22 C10.1361606,22 8.57006028,20.7252272 8.12601749,19 L4,19 C3.44771525,19 3,18.5522847 3,18 C3,17.4477153 3.44771525,17 4,17 L5,17 L5,11 C5,7.47352809 7.60770586,4.55611852 11,4.07088886 Z M10.2675644,19 C10.6133738,19.5978014 11.2597176,20 12,20 C12.7402824,20 13.3866262,19.5978014 13.7324356,19 L10.2675644,19 Z M17,17 L17,11 C17,8.23857625 14.7614237,6 12,6 C9.23857625,6 7,8.23857625 7,11 L7,17 L17,17 Z" id="path-1"></path>
+    </defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="000_Image" transform="translate(-540.000000, -255.000000)">
+            <g id="Icon" transform="translate(540.000000, 255.000000)">
+                <g id="Image-/-Icon-/-24px-/-BadgeCalendar">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Rectangle" fill="#979797" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

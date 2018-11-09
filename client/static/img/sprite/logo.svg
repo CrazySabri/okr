@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1215" height="298" viewBox="0 0 1215 298">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 200px;
+        font-family: "Weibei SC";
+        font-weight: 700;
+      }
+
+      .cls-2 {
+        fill: #dd220e;
+      }
+    </style>
+  </defs>
+  <text id="SMARTDOJO" class="cls-1" x="65.235" y="200.142">SMART<tspan class="cls-2">DOJO</tspan></text>
+</svg>

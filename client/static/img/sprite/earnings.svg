@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>earning</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M10.7142857,7 L13.7142857,7 C14.2665705,7 14.7142857,7.44771525 14.7142857,8 L14.7142857,21 L9.71428571,21 L9.71428571,8 C9.71428571,7.44771525 10.162001,7 10.7142857,7 Z M4,11 L7,11 C7.55228475,11 8,11.4477153 8,12 L8,21 L3,21 L3,12 C3,11.4477153 3.44771525,11 4,11 Z M17.4285714,3 L20.4285714,3 C20.9808562,3 21.4285714,3.44771525 21.4285714,4 L21.4285714,21 L16.4285714,21 L16.4285714,4 C16.4285714,3.44771525 16.8762867,3 17.4285714,3 Z" id="path-1"></path>
+    </defs>
+    <g id="lv1/Icons24/sidemenu/earnings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Rectangle-4-Copy" fill="#9B9B9B" xlink:href="#path-1"></use>
+    </g>
+</svg>

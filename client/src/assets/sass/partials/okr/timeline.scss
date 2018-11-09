@@ -1,0 +1,68 @@
+.okr-timeline {
+  .wrap--timeline {
+    padding:24px;
+    + .wrap--timeline {
+      padding-top:0;
+    }
+  }
+  + .okr-timeline {
+    margin-top:12px;
+  }
+
+  &_commentHeader {
+      padding-top:40px;
+      margin-bottom:24px;
+  }
+  &_header {
+    padding-bottom: 4px!important;
+    &Profile {
+      padding:2px;
+      p {
+        + p {
+          margin-top:0;
+        }
+      }
+    }
+    &Avatar {
+      float:left;
+      margin-right: 8px;
+    }
+  }
+  &_react {
+    float:right;
+    padding:20px 20px 0 0;
+  }
+  &_body {
+    clear: both;
+  }
+  .glyphicon {
+    &.color--gray {
+      color:#eee;
+    }
+    &.color--red {
+      color: #ff5102
+    }
+  }
+  .text--date, .text--okr, .text--keyresult, .text--comment, .text--user {
+    vertical-align: top;
+  }
+  .text--date {
+    width: 130px;
+    font-size: 10px;
+  }
+  .text--okr {
+    width: 290px;
+  }
+  .text--comment {
+    width: 500px;
+  }
+  .text--user {
+    width: 140px;
+    + .text--okr {
+      width: 250px;
+      + .text--comment {
+        width: 400px;
+      }
+    }
+  }
+}
