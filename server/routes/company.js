@@ -11,7 +11,11 @@ module.exports = function(app) {
 
   //Crud
   router.post('/company/create', (req, res, next) => {
-    companyController.create(req)
+    companyController.create({
+      name: req.body.name,
+      ownerId: req.body.ownerId,
+      code: req.body.code
+    })
     .then((data) => {
       res.send(data)
     })
@@ -48,7 +52,7 @@ module.exports = function(app) {
   })
 
   router.get('/company/teams/:company_id', (req, res, next) => {
-    companyController.listTeams(req) 
+    companyController.listTeams(req)
     .then((data) => {
       res.send(data)
     })
@@ -72,6 +76,34 @@ module.exports = function(app) {
     })
   });
 
+  //cRud
+  router.get('/company/getbycode/:code', (req, res, next) => {
+    companyController.getbycode(req.params.code)
+    .then((data) => {
+      res.send(data)
+    })
+    .catch((err) => {
+      res.send({
+        err: err
+      })
+    })
+  });
+
+  router.get('/company/hascompany/code/:code', (req, res, next) => {
+    companyController.getbycode(req.params.code)
+    .then((data) => {
+      if(data) {
+        res.send(true)
+      } else {
+        res.send(false)
+      }
+    })
+    .catch((err) => {
+      res.send({
+        err: err
+      })
+    })
+  })
 
   router.put('/company/update/:id', (req, res, next) => {
     let id = req.params.id
@@ -102,5 +134,5 @@ module.exports = function(app) {
     })
   });
 
-  app.use(router)
+  app.use(router);
 }

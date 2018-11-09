@@ -69,6 +69,9 @@
     &--fluid {
       width:100%;
     }
+    &--small {
+      width: 150px;
+    }
     &--medium {
       width:200px;
     }
@@ -77,6 +80,9 @@
     &--big {
       height:48px;
     }
+  }
+  &[disabled] {
+    background:#9a9a9a;
   }
 }
 

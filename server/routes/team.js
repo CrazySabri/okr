@@ -36,8 +36,21 @@ module.exports = function(app) {
   });
 
   //cRud
-  router.get('/team/get/:user_id/:id', (req, res, next) => {
-    teamController.get(req.params.user_id, req.params.id)
+  router.get('/team/list/manager_of/:manager_id', (req, res, next) => {
+    teamController.listManagerOf(req)
+    .then((data) => {
+      res.send(data)
+    })
+    .catch((err) => {
+      res.send({
+        err: err
+      })
+    })
+  });
+
+  //cRud
+  router.get('/team/get/:id', (req, res, next) => {
+    teamController.get(req.params.id)
     .then((data) => {
       res.send(data)
     })

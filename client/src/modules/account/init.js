@@ -1,15 +1,20 @@
 import Vue from 'vue'
+import Routes from './routes'
+import Store from './store'
 import AuthService from './services/Auth'
 import AccountService from './services/Account'
+import AccountMixins from './mixins/Account'
 
-if(!('$service' in Vue)) {
-  Vue.$service = {}
+export default {
+  routes: Routes,
+  mixins: {
+    account: AccountMixins
+  },
+  services: {
+    auth: new AuthService,
+    account: new AccountService
+  },
+  stores: {
+    account: Store
+  }
 }
-
-Vue.$service.auth = new AuthService
-Vue.$service.account = new AccountService
-
-import AccountMixins from './mixins/Account.js';
-Vue.mixin(AccountMixins);
-
-export default {}

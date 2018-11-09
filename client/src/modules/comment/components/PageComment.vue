@@ -18,32 +18,40 @@
     </div>
 
     <div class="module-comment_list">
-      <div class="content-container wrap--content border--curved module-comment_listItem" v-for="comment in comments">
-        <div class="module-comment_listItem_header">
+      <template v-if="comments && comments.length">
+        <div class="content-container wrap--content border--curved module-comment_listItem" v-for="comment in comments">
           <div class="module-comment_listItem_header">
-            <div class="module-comment_listItem_headerAvatar">
-              <span class="avatar-user size--comment">
-                <img src="/static/img/dummy-avatar.jpg" />
-              </span>
-            </div>
-            <div class="module-comment_listItem_headerProfile">
-              <p><strong class="text--user">
-                <router-link :to="'/employee/'+comment.user.id">{{ comment.user.lastname }} {{ comment.user.firstname }}</router-link></strong>
-              </p>
-              <p><span class="text--date">{{ comment.date }}</span></p>
+            <div class="module-comment_listItem_header">
+              <div class="module-comment_listItem_headerAvatar">
+                <span class="avatar-user size--comment">
+                  <img src="/static/img/dummy-avatar.jpg" />
+                </span>
+              </div>
+              <div class="module-comment_listItem_headerProfile">
+                <p><strong class="text--user">
+                  <router-link :to="'/employee/'+comment.user.id">{{ comment.user.lastname }} {{ comment.user.firstname }}</router-link></strong>
+                </p>
+                <p><span class="text--date">{{ comment.date_created }}</span></p>
+              </div>
             </div>
           </div>
+          <div class="module-comment_listItem_body">
+            <p class="text--comment">{{ comment.comment }}</p>
+          </div>
         </div>
-        <div class="module-comment_listItem_body">
-          <p class="text--comment">{{ comment.comment }}</p>
+      </template>
+      <template v-else>
+        <div class="content-nodata">
+          <p>There is no comments</p>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 
 </template>
 
 <script>
+  import Vue from 'vue'
   import moment from 'moment'
   export default {
     data() {
@@ -56,47 +64,56 @@
         type: String,
         required: false,
         default: 'individual'
+      },
+      id: {
+        type: String,
+        required: true
       }
+    },
+    mounted() {
+      Vue.$service.comment.fetchComments(this.type, this.id)
+      .then((data) => {
+        this.$store.dispatch('fetchComments', data)
+      })
     },
     computed: {
       comments() {
-        let sample = () => {
-          return {
-            date: 1528475635,
-            comment: 'This is a sample comment !',
-            user: {
+       let list = this.$store.state.comment.list
+       if(list && list.length) {
+         list.map((x) => {
+            x.date_created = moment(x.date_created).format('YYYY/MM/DD HH:mm:ss')
+            x.user = {
               firstname: 'Firstname',
               lastname: 'Lastname',
               id: 1
             }
-          }
-        }
-        let data = [sample(),sample(),sample(),sample(),sample()]
-        data.map((x) => {
-          x.date = moment.unix(x.date).format('YYYY/MM/DD HH:mm')
-        })
-
-        return this.sort(data, 'date', false)
+         })
+       }
+       return list
       }
     },
     methods: {
-      sort(arr, key, desc)  {
-        if(!desc) {
-          return arr.sort(function(a,b) {return (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);} );
-        }
-        return arr.sort(function(a,b) {return (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);} );
-      },
       onSubmit() {
-        this.comments.unshift({
-          date: moment().format('YYYY/MM/DD HH:mm'),
+
+        Vue.$service.comment.postComment({
+          type: this.type,
+          parentId: this.id ,
           comment: this.newComment,
-          user: {
-            firstname: 'Firstname',
-            lastname: 'Lastname',
-            id: 1
-          }
+          ownerId: this.currentUserId,
+          date_created: moment().format('YYYY/MM/DD HH:mm:ss')
         })
-        this.newComment = ''
+        .then((data) => {
+          console.log('comment', data)
+
+          this.$store.dispatch('addComment', data.doc)
+
+          this.newComment = ''
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+
       }
     }
   }

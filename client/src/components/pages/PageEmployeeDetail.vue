@@ -20,15 +20,7 @@
                     <span>{{ currentEmployee.profile.lastname }} {{ currentEmployee.profile.firstname }}</span>
                   </p>
                   <p class="employee-header_position">
-                    <span>{{ currentEmployee.position }}</span>
-                  </p>
-                  <p class="employee-header_team">
-                    <template v-if="currentEmployee.team">
-                      <span>{{ currentEmployee.team.name }}</span>
-                    </template>
-                    <template v-else>
-                      <span class="text--unassigned">No assigned to a team</span>
-                    </template>
+                    <span class="text--position">{{ currentEmployee.profile.position }}</span>
                   </p>
                 </div>
                 <div class="clear--both"></div>
@@ -70,7 +62,7 @@
   import LayoutDefault from '@/components/layouts/LayoutDefault';
   import SidebarEmployees from '@/components/partials/common/SidebarEmployees';
   import OkrGridList from '@/components/partials/okr/GridList';
-  import AppTimeline from '@/components/partials/okr/AppTimeline';
+  import AppTimeline from '@/modules/timeline/components/AppTimeline';
 
   export default {
     components: {

@@ -10,6 +10,9 @@
       <li class="list-group-item">
         <router-link to="/mypage/timeline">My timeline</router-link>
       </li>
+      <li class="list-group-item">
+        <router-link to="/logout">Logout</router-link>
+      </li>
     </ul>
   </div>
 </template>

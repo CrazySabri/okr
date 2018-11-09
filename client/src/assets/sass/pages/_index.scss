@@ -1,0 +1,89 @@
+.page-index_header {
+  display: flex;
+  justify-content: flex-end;
+  -webkit-box-pack: end;
+    -ms-flex-pack: end;
+  padding: 20px 30px;
+  &_logo {
+    height: 40px;
+    margin-right: auto;
+  }
+  &_loginbtn {
+    background-color: $main-color;
+    border-radius: 30px;
+    color: white;
+    margin: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    height: 40px;
+    line-height: 40px;
+    width: 150px;
+    &:hover, &:active {
+      text-decoration: none;
+      color: white;
+      background: $main-color-hover;
+    }
+  }
+  &_signupbtn {
+    background-color: white;
+    border-radius: 30px;
+    color: $main-color;
+    margin: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    height: 40px;
+    line-height: 40px;
+    width: 150px;
+    &:hover, &:active {
+      text-decoration: none;
+      color: white;
+      background: $main-color-hover;
+    }
+  }
+}
+
+.page-index_firstview {
+  background-image: url("../static/img/lp/first-view-background.png");
+   background-repeat: no-repeat;
+   display: flex;
+   height: 725px;
+}
+
+.page-index_firstviewLeft {
+  padding: 140px 130px;
+  width: 100%;
+  word-wrap: break-word;
+  h2 {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  p {
+    color: white;
+    font-weight: bold;
+    line-height: 1.8;
+    margin-bottom: 70px;
+  }
+  &_signupbtn {
+    background-color: white;
+    border-radius: 30px;
+    color: $main-color;
+    font-weight: bold;
+    padding: 20px 40px;
+    text-decoration: none;
+
+    &:hover, &:active {
+      text-decoration: none;
+      color: $main-color-hover;
+    }
+  }
+}
+
+.page-index_firstviewRight{
+  &_deviceimg {
+    margin-top: 150px;
+    position: absolute;
+    right: 0;
+    width: 46vw;
+  }
+}

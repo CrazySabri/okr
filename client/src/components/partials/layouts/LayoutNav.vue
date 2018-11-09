@@ -2,16 +2,14 @@
   <div class="app-nav">
     <div class="page--inner">
 
-      <template v-if="loggedInUser.role == 'admin'">
-        <ul class="float--right">
+      <ul class="float--right">
+        <template v-if="role == 'manager'">
+          <li><router-link to="/manager/team">Management</router-link></li>
+        </template>
+        <template v-if="role == 'admin'">
           <li><router-link to="/admin/team">Admin</router-link></li>
-        </ul>
-      </template>
-      <template v-else-if="loggedInUser.role == 'manager'">
-        <ul class="float--right">
-          <li><router-link to="/admin/team">Management</router-link></li>
-        </ul>
-      </template>
+        </template>
+      </ul>
 
       <ul class="float--left">
         <li><router-link to="/mypage">My Page</router-link></li>
@@ -29,8 +27,14 @@
   export default {
     name: 'LayoutHeaderNav',
     computed: {
+      role() {
+        return this.$store.getters.getLoggedInAccountRole
+      },
       loggedInUser() {
-        return this.$store.state.account.loggedInUser
+        return this.$store.getters.loggedInUser
+      },
+      hasTeamHasManager() {
+        return false
       }
     }
   }

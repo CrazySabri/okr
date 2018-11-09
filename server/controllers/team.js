@@ -17,13 +17,30 @@ module.exports = {
       })
     })
   },
-  get: (user_id, team_id) => {
+
+  listManagerOf: (req) => {
+    return new Promise((resolve, reject) => {
+
+      TeamModel.listManagerOf(req.params.manager_id)
+      .then((doc) => {
+        resolve(doc)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  get: (team_id) => {
 
     return new Promise((resolve, reject) => {
 
-      TeamModel.get(user_id, team_id)
+      TeamModel.get(team_id)
       .then((doc) => {
-        resolve(doc)
+        if(doc) {
+          resolve(doc)
+        } else {
+          resolve(null)
+        }
       })
       .catch((err) => {
         reject(err)
@@ -34,6 +51,8 @@ module.exports = {
 
     let schema = Object.assign({
       name: '',
+      mission: '',
+      vision:'',
       companyId: '',
       members: [],
       managers: []

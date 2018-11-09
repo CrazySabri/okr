@@ -9,7 +9,8 @@ module.exports = {
   login: (req) => {
     var schema = {
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      "company.code": req.body.company
     }
 
     return new Promise((resolve, reject) => {
@@ -82,24 +83,34 @@ module.exports = {
         lastname: req.body.lastname,
         position: req.body.position
       },
-      role: req.body.role
+      company: {
+        code: req.body.company.code,
+        role: req.body.company.role
+      }
     }
 
     return new Promise((resolve, reject) => {
       AccountModel.create(schema)
       .then((doc) => {
 
-        CompanyModel.insetOneMember(req.body.company_id, doc._id, req.body.role)
-        .then(() => {
+        if(req.body.company.id) {
+          CompanyModel.insetOneMember(req.body.company.id, doc._id, req.body.role)
+          .then(() => {
+            resolve({
+              created: !!doc,
+              doc
+            })
+          })
+          .catch((err) => {
+            AccountModel.findByIdAndRemove(doc._id)
+            reject(err)
+          })
+        } else {
           resolve({
             created: !!doc,
             doc
           })
-        })
-        .catch((err) => {
-          AccountModel.findByIdAndRemove(doc._id)
-          reject(err)
-        })
+        }
       })
       .catch((err) => {
         reject(err)
@@ -134,5 +145,33 @@ module.exports = {
         reject(err)
       })
     })
-  }
+  },
+  updatePassword: (user_id, old_password, new_password) => {
+
+    return new Promise((resolve, reject) => {
+      AccountModel.get(user_id, {})
+      .then((currentUser) => {
+        if(currentUser.password === old_password) {
+          AccountModel.updatePassword(user_id, new_password)
+          .then((doc) => {
+            resolve({
+              updated: true,
+              doc
+            })
+          })
+          .catch((err) => {
+            reject(err)
+          })
+
+        } else {
+          reject('wrong password')
+        }
+
+      })
+      .catch((err) => {
+        reject(err)
+      })
+
+    })
+  },
 }

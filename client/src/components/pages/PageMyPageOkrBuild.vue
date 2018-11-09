@@ -23,7 +23,7 @@
             <template v-else>
               <div class="okr-request_list content-container background--transparent">
                 <div class="okr-request_listItem"  v-for="okr in okrRequest">
-                  <router-link :to="'/mypage/okr/build/1'" class="link--absolute"></router-link>
+                  <router-link :to="'/mypage/okr/build/'+okr._id" class="link--absolute"></router-link>
                   <okr-build-item :okr="okr"></okr-build-item>
                 </div>
               </div>
@@ -51,21 +51,18 @@
       'okr-build-item': buildItem
 
     },
+    mounted() {
+      Vue.$service.okr.fetchPersonalOkr(this.currentUserId)
+      .then((data) => {
+        this.$store.dispatch('fetchPersonalOkr', data)
+      })
+    },
     computed: {
       okrRequest() {
-        return [1]
+        return this.$store.state.okr.personalList.filter((x) => {
+          return x.status === 'request'
+        })
       },
-      currentUser() {
-        return {
-          id: 1,
-          firstname: 'Firstname',
-          lastname: 'Lastname',
-          position: 'Engineer',
-          team: {
-            name: 'Team name'
-          }
-        }
-      }
     }
   }
 </script>

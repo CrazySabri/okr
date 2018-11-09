@@ -5,9 +5,11 @@ var ObjectId = mongoose.Types.ObjectId;
 
 var TeamSchema = new Schema({
   name: { type: String, required: true },
+  mission: { type: String },
+  vision: { type: String },
   members: [{ type: Schema.ObjectId }],
   managers: [{ type: Schema.ObjectId }],
-  parentGroupId: { type: Schema.ObjectId },
+  parentId: { type: Schema.ObjectId },
   companyId: { type: Schema.ObjectId, required: true}
 });
 
@@ -27,20 +29,10 @@ module.exports = {
       })
     })
   },
-  get: (user_id, team_id) => {
+  listManagerOf: (manager_id) => {
     return new Promise((resolve, reject) => {
       Model.find({
-        "$and": [
-          { _id: new ObjectId(team_id) },
-        /*  { "$or": [{
-            "members": {
-              "$in": new ObjectId(user_id)
-            },
-            "managers": {
-              "$in": new ObjectId(user_id)
-            }
-          }] }*/
-        ]
+        "managers": { "$in": new ObjectId(manager_id) }
       }, function(err, doc) {
         if(err) {
           reject(err)
@@ -50,21 +42,80 @@ module.exports = {
       })
     })
   },
+  get: (team_id) => {
+    return new Promise((resolve, reject) => {
+
+      Model.aggregate([
+        { "$match": {
+            _id: new ObjectId(team_id)
+          },
+        },
+        {
+          "$lookup": {
+            from: "accounts",
+            localField: "members",
+            foreignField: "_id",
+            as: "members"
+          }
+        },
+        {
+          "$lookup": {
+            from: "accounts",
+            localField: "managers",
+            foreignField: "_id",
+            as: "managers"
+          }
+        },
+        {
+          "$lookup": {
+            from: "teams",
+            localField: "parentId",
+            foreignField: "_id",
+            as: "parentTeam"
+          }
+        },
+        {
+          "$unwind": {
+            path: "$parentTeam",
+            preserveNullAndEmptyArrays: true
+          }
+        }
+      ], (err, doc) => {
+        console.log(doc)
+        if(err) {
+          reject(err)
+        } else {
+          if(doc && doc.length) {
+            resolve(doc[0])
+          } else {
+            resolve(null)
+          }
+        }
+      })
+
+    })
+  },
   create: (schema) => {
 
     schema = Object.assign({
       name: '',
+      mission: '',
+      vision: '',
       companyId: '',
       members: [],
-      managers: []
+      managers: [],
+      parentId: ''
     }, schema)
 
     return new Promise((resolve, reject) => {
       var model = new Model({
         name: schema.name,
+        vision: schema.vision,
+        mission: schema.mission,
         companyId: new ObjectId(schema.companyId),
         members: schema.members,
-        managers: schema.managers
+        managers: schema.managers,
+        parentId: schema.parentId ? new ObjectId(schema.parentId) : null
       })
       model.save(function (err, doc) {
         if(err) {

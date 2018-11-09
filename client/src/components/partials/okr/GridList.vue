@@ -87,22 +87,24 @@
         let now = Date.now()/1000
 
         data.map((x) => {
-          x.date_end = 1567475635
-          x.date_start = 1527475635
+          x.date_start_moment = moment(x.date_start)
+          x.date_end_moment = moment(x.date_end)
+
+          x.date_end = x.date_end_moment.format('YYYY/MM/DD')
+          x.date_start = x.date_start_moment.format('YYYY/MM/DD')
         })
+
         data = data.filter((x) => {
-          if(this.filter == 'active' && x.date_end < now) {
+
+          if(this.filter == 'active' && x.date_end_moment.unix() < now) {
             return false
           }
-          else if(this.filter == 'past' && x.date_end >= now) {
+          else if(this.filter == 'past' && x.date_end_moment.unix() >= now) {
             return false
           }
           return true
         })
-        data.map((x) => {
-          x.date_end = moment.unix(x.date_end).format('YYYY/MM/DD')
-          x.date_start = moment.unix(x.date_start).format('YYYY/MM/DD')
-        })
+
 
         return this.sort(data, 'date_start', false)
       }

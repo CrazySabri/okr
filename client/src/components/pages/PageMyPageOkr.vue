@@ -45,11 +45,16 @@
       'okr-grid': OkrGridList,
     },
     mounted() {
-      this.$store.dispatch('fetchOkrOwnerOf', this.$store.getters.getLoggedInAccountId)
+      Vue.$service.okr.fetchPersonalOkr(this.currentUserId)
+      .then((data) => {
+        this.$store.dispatch('fetchPersonalOkr', data)
+      })
     },
     computed: {
       okrList() {
-        return this.$store.state.okr.okrOwnerOf
+        return this.$store.state.okr.personalList.filter((x) => {
+          return x.status === 'confirmed'
+        })
       },
       currentUser() {
         return {

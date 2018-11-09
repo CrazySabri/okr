@@ -47,7 +47,7 @@
     },
     computed: {
       account() {
-        return this.$store.state.account.oneFetched
+        return this.$store.getters.getAccount(this.user_id)
       },
       fullname() {
         if(!this.account) return null;
@@ -68,7 +68,10 @@
       }
     },
     mounted() {
-      this.$store.dispatch('fetchOneAccount', this.user_id)
+      Vue.$service.account.fetchOneAccount(this.user_id)
+      .then((data) => {
+        this.$store.dispatch('fetchOneAccount', data)
+      })
     }
   }
 </script>

@@ -4,7 +4,7 @@ var Promise = require('promise')
 var ObjectId = mongoose.Types.ObjectId;
 
 var AccountSchema = new Schema({
-  email: { type: String, required: true, index: { unique: true }},
+  email: { type: String, required: true },
   password: { type: String, required: true },
   date_created: { type: Date, required: true },
   date_update: { type: Date },
@@ -14,8 +14,13 @@ var AccountSchema = new Schema({
     lastname: { type: String, required: true },
     position: { type: String, required: false }
   },
-  role: { type: String, required: true } //admin, manager, staff
+  company: {
+    code: { type: String, required: true },
+    role: { type: String, required: true }, //admin, manager, staff
+  }
 });
+
+AccountSchema.index({ email: 1, "company.code": 1 }, { unique: true });
 
 var Model = mongoose.model("Account", AccountSchema);
 
@@ -32,9 +37,14 @@ module.exports = {
       })
     })
   },
-  get: (id, params) => {
+  get: (id, dataFilter) => {
+    if(dataFilter === undefined) {
+      dataFilter = {
+        password: 0
+      }
+    }
     return new Promise((resolve, reject) => {
-      Model.findById(new ObjectId(id), {password:0}, function(err, doc) {
+      Model.findById(new ObjectId(id), dataFilter, function(err, doc) {
         if(err) {
           reject(err)
         } else {
@@ -78,7 +88,10 @@ module.exports = {
         lastname: '',
         position: ''
       },
-      role: 'staff'
+      company: {
+        code: '',
+        role: 'staff'
+      }
     }, schema || {})
 
     return new Promise((resolve, reject) => {
@@ -118,5 +131,19 @@ module.exports = {
         }
       })
     })
-  }
+  },
+  updatePassword: (user_id, new_password) => {
+    schema = {
+      password: new_password
+    }
+    return new Promise((resolve, reject) => {
+      Model.findByIdAndUpdate(new ObjectId(user_id), schema, function (err, doc) {
+        if(err) {
+          reject(err)
+        } else {
+          resolve(doc)
+        }
+      })
+    })
+  },
 }

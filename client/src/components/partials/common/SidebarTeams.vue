@@ -15,17 +15,24 @@
         </li>
       </ul>
     </div>
+    <div v-else class="content-nodata">
+      <p>There is no team</p>
+    </div>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue';
   export default {
     mounted() {
-      this.$store.dispatch('fetchCompanyTeams', this.$store.getters.currentCompanyId)
+      Vue.$service.team.fetchTeams(this.$store.getters.currentCompanyId)
+      .then((data) => {
+        this.$store.dispatch('fetchTeams', data)
+      })
     },
     computed: {
       teams() {
-        return this.$store.state.company.companyTeams
+        return this.$store.state.team.list
       }
     }
   }

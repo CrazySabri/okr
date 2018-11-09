@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    <notification></notification>
   </layout-default>
 
 </template>
@@ -26,11 +27,19 @@
   import Vue from 'vue'
   import LayoutDefault from '@/components/layouts/LayoutDefault';
   import SidebarMyPage from '@/components/partials/common/SidebarMyPage';
+  import Notification from '@/modules/notification/components/Notification';
 
   export default {
     components: {
       'layout-default': LayoutDefault,
-      'sidebar-mypage': SidebarMyPage
-    }
+      'sidebar-mypage': SidebarMyPage,
+      'notification': Notification,
+    },
+    // mounted() {
+    //   this.$store.dispatch('addNotification', {å
+    //     type: "success",
+    //     text: "this is a message this is a message this is a message this is a message this is a message"
+    //   })
+    // }
   }
 </script>

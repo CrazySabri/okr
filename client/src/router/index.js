@@ -1,159 +1,196 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '@/store';
+import store from '@/store'
 
 Vue.use(Router)
 
 import Page404 from '@/components/errors/Page404'
 import PageIndex from '@/components/pages/PageIndex'
+import PageHelp from '@/components/pages/PageHelp'
+import PageTerms from '@/components/pages/PageTerms'
+import PagePrivacy from '@/components/pages/PagePrivacy'
+import PageContact from '@/components/pages/PageContact'
 import PageOrganization from '@/components/pages/PageOrganization'
 import PageNews from '@/components/pages/PageNews'
-import PageTimeline from '@/components/pages/PageTimeline'
 import PageMissionVision from '@/components/pages/PageMissionVision'
-import PageTeams from '@/components/pages/PageTeams'
-import PageTeamDetail from '@/components/pages/PageTeamDetail'
+import PageTeams from '@/modules/team/components/PageTeams'
+import PageTeamDetail from '@/modules/team/components/PageTeamDetail'
 import PageEmployees from '@/components/pages/PageEmployees'
 import PageEmployeeDetail from '@/components/pages/PageEmployeeDetail'
 import PageOkrDetail from '@/components/pages/PageOkrDetail'
-import PageTimelinePost from '@/components/pages/PageTimelinePost';
-import PageRapport from '@/components/pages/PageRapport';
-import PageOkrTree from '@/components/pages/PageOkrTree';
+import PageRapport from '@/components/pages/PageRapport'
+import PageOkrTree from '@/components/pages/PageOkrTree'
 import PageMyPage from '@/components/pages/PageMyPage'
 import PageMyPageOkr from '@/components/pages/PageMyPageOkr'
-import PageMyPageTimeline from '@/components/pages/PageMyPageTimeline'
 import PageMyPageOkrBuild from '@/components/pages/PageMyPageOkrBuild'
 import PageMyPageOkrBuildForm from '@/components/pages/PageMyPageOkrBuildForm'
-
-import ModuleCommentRoutes from '@/modules/comment/routes';
-import ModuleAccountRoutes from '@/modules/account/routes';
-import ModuleAdminRoutes from '@/modules/admin/routes';
 
 const router = new Router({
   mode: 'history',
   routes: [
-    ...ModuleAccountRoutes,
-    ...ModuleCommentRoutes,
-    ...ModuleAdminRoutes,
     {
       path: '/',
       name: 'PageIndex',
       component: PageIndex
     },
     {
+      path: '/help',
+      name: 'PageHelp',
+      component: PageHelp,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/terms',
+      name: 'PageTeams',
+      component: PageTerms,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/privacy',
+      name: 'PagePrivacy',
+      component: PagePrivacy,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/contact',
+      name: 'PageContact',
+      component: PageContact,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '/organization',
       name: 'PageOrganization',
       component: PageOrganization,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/organization/news',
       name: 'PageNews',
       component: PageNews,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/organization/missionvision',
       name: 'PageMissionVision',
       component: PageMissionVision,
-      beforeEnter: Vue.$service.auth.authRequired
-    },
-    {
-      path: '/organization/timeline',
-      name: 'PageTimeline',
-      component: PageTimeline,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/teams',
       name: 'PageTeams',
       component: PageTeams,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/team/:id',
       name: 'PageTeamDetail',
       component: PageTeamDetail,
-      beforeEnter: Vue.$service.auth.authRequired,
+      meta: {
+        requireAuth: true
+      },
       props: true
     },
     {
       path: '/employees',
       name: 'PageEmployees',
       component: PageEmployees,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/employee/:id',
       name: 'PageEmployeeDetail',
       component: PageEmployeeDetail,
       props: true,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/okr/rapport/:id',
       name: 'PageRapport',
       component: PageRapport,
       props: true,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/okr/tree',
       name: 'PageOkrTree',
       component: PageOkrTree,
       props: true,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/okr/tree/:id',
       name: 'PageOkrTree',
       component: PageOkrTree,
       props: true,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/okr/:type/:id',
       name: 'PageOkrDetail',
       component: PageOkrDetail,
       props: true,
-      beforeEnter: Vue.$service.auth.authRequired
-    },
-    {
-      path: '/timeline/post/:id',
-      name: 'PageTimelinePost',
-      component: PageTimelinePost,
-      props: true,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/mypage',
       name: 'PageMyPage',
       component: PageMyPage,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/mypage/okr',
       name: 'PageMyPageOkr',
       component: PageMyPageOkr,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/mypage/okr/build/:id',
       name: 'PageMyPageOkrBuildForm',
       component: PageMyPageOkrBuildForm,
       props: true,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/mypage/okr/build',
       name: 'PageMyPageOkrBuild',
       component: PageMyPageOkrBuild,
-      beforeEnter: Vue.$service.auth.authRequired
-    },
-    {
-      path: '/mypage/timeline',
-      name: 'PageMyPageTimeline',
-      component: PageMyPageTimeline,
-      beforeEnter: Vue.$service.auth.authRequired
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/404',
@@ -178,20 +215,44 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  if(to.meta) {
+    if(to.meta.beforeEnter) {
+      to.meta.beforeEnter(to, from, next)
+    }
 
-  if(to.meta && to.meta.beforeEnter) {
-    to.meta.beforeEnter()
+    if(to.meta.module == 'admin') {
+      Vue.$service.admin.adminRequired(to, from, next)
+    } else {
+      if(to.meta.requireUnauth === true) {
+        Vue.$service.auth.unauthRequired(to, from, next)
+      }
+      else if(to.meta.requireAuth === true) {
+        Vue.$service.auth.authRequired(to, from, next)
+      } else {
+        next()
+      }
+    }
   }
-  next()
 })
 
 router.beforeResolve((to, from, next) => {
-  console.log()
-  if(store.state.account) {
-    Vue.$service.company.fetchCurrentCompany()
-    .then(() => {
+  if(to.name == 'PageLogin') {
+    next(true)
+    return;
+  }
+  if(store.state.account && store.state.account.loggedInUser) {
+    Vue.$service.company.fetchCompanyByCode(store.state.account.loggedInUser.company.code)
+    .then((data) => {
+      store.dispatch('setCurrentCompany', data)
       next(true)
     })
+    .catch(() => {
+      next({
+        path: '/login'
+      })
+    })
+  } else {
+    next(true)
   }
 })
 export default router

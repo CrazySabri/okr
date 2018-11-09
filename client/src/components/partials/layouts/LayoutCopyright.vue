@@ -1,6 +1,6 @@
 <template>
   <div class="app-copyright">
-    <small>© 2018 OHAKO Inc. All rights reserved.</small>
+    <small>© 2018 Jerome Dupuis Inc. All rights reserved.</small>
   </div>
 </template>
 

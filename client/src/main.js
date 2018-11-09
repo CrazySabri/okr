@@ -2,14 +2,10 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import Vue from 'vue'
-
-if(!('$service' in Vue)) {
-  Vue.$service = {}
-}
-import CompanyService from './services/Company'
-Vue.$service.company = new CompanyService
+import VueProgressBar from 'vue-progressbar'
 
 import './modules'
+
 import App from './App'
 import router from './router'
 import store from './store'
@@ -21,8 +17,22 @@ Vue.$api = api
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 
-import OkrMixins from '@/mixins/Okr';
+import OkrMixins from '@/mixins/Okr'
 Vue.mixin(OkrMixins)
+
+import UtilMixins from '@/mixins/Util'
+Vue.mixin(UtilMixins)
+
+Vue.use(VueProgressBar, {
+  color: '#04538e',
+  failedColor: '#ff3d55',
+  height: '4px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 800
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

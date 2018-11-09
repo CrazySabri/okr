@@ -7,18 +7,20 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js",
-    "web-server": "http-server -p 8081 dist/ &"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
+    "mavon-editor": "^2.6.15",
     "moment": "^2.22.2",
     "node-sass": "^4.9.0",
     "promise": "^8.0.1",
     "sass-loader": "^7.0.3",
     "vue": "^2.5.2",
     "vue-cookies": "^1.5.6",
+    "vue-markdown": "^2.2.4",
+    "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1"

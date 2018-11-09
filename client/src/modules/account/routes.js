@@ -5,31 +5,37 @@ import PageSignupInvite from './components/PageSignupInvite'
 import PageLogout from './components/PageLogout'
 import PageAccount from './components/PageAccount'
 import PageRecoveryidentifier from './components/PageRecoveryidentifier'
+import PageSetting from './components/PageSetting'
+import PageSettingProfile from './components/PageSettingProfile'
+import PageSettingPassword from './components/PageSettingPassword'
 
 export default [
   {
     path: '/login',
     name: 'PageLogin',
     component: PageLogin,
-    beforeEnter: Vue.$service.auth.unauthRequired
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
   },
   {
     path: '/signup',
     name: 'PageSignup',
     component: PageSignup,
-    beforeEnter: Vue.$service.auth.unauthRequired
-  },
-  {
-    path: '/signup/invite/:id',
-    name: 'PageSignupInvite',
-    component: PageSignupInvite,
-    beforeEnter: Vue.$service.auth.unauthRequired
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
   },
   {
     path: '/recoveryidentifier',
     name: 'PageRecoveryidentifier',
     component: PageRecoveryidentifier,
-    beforeEnter: Vue.$service.auth.unauthRequired
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
   },
   {
     path: '/logout',
@@ -40,6 +46,36 @@ export default [
     path: '/account',
     name: 'PageAccount',
     component: PageAccount,
-    beforeEnter: Vue.$service.auth.authRequired
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
+  },
+  {
+    path: '/mypage/settings',
+    name: 'PageSetting',
+    component: PageSetting,
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
+  },
+  {
+    path: '/mypage/settings/profile',
+    name: 'PageSettingProfile',
+    component: PageSettingProfile,
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
+  },
+  {
+    path: '/mypage/settings/password',
+    name: 'PageSettingPassword',
+    component: PageSettingPassword,
+    meta: {
+      requireUnauth: true,
+      module: 'account'
+    },
   }
 ]

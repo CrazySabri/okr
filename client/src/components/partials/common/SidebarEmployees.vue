@@ -19,9 +19,13 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   export default {
     mounted() {
-      this.$store.dispatch('fetchCompanyMembers', this.$store.getters.currentCompanyId)
+      Vue.$service.company.fetchCompanyMembers(this.$store.getters.currentCompanyId)
+      .then((data) => {
+        this.$store.dispatch('fetchCompanyMembers', data)
+      })
     },
     computed: {
       employees() {

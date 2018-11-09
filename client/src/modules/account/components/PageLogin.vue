@@ -11,7 +11,11 @@
       <div class="login-body l-container--fluid padded--large style--shadowed">
         <div class="ui-form">
           <form method="post" action="/">
-            <input type="hidden" name="_token" value="" />
+            <div class="ui-form_group">
+              <label>コンパニーコード</label>
+              <input class="ui-input--text" type="text" name="company" v-model="company" novalidate :class="[{'state--error' : $v.email.$error}]" />
+              <p class="ui-input_error" v-if="$v.company.$error">入力されたコンパニーコードは正しくありません。</p>
+            </div>
             <div class="ui-form_group">
               <label>メールアドレス</label>
               <input class="ui-input--text" type="email" name="email" v-model="email" novalidate :class="[{'state--error' : $v.email.$error}]" />
@@ -49,7 +53,8 @@
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        company: ''
       }
     },
     validations: {
@@ -59,6 +64,9 @@
       email: {
         required,
         email
+      },
+      company: {
+        required
       }
     },
     methods: {
@@ -66,6 +74,7 @@
         this.$v.$reset()
         this.email = ''
         this.password = ''
+        this.company = ''
       },
       onSubmit() {
 
@@ -74,9 +83,11 @@
           return false;
         }
 
+        this.$Progress.start()
         Vue.$api.post('/account/login', {
           email: this.email,
-          password: this.password
+          password: this.password,
+          company: this.company
         })
         .then((response) => {
           if(response.data.loggedin) {
@@ -85,15 +96,21 @@
               account: response.data.account
             })
             .then(() => {
+              this.$Progress.finish()
               this.resetForm()
               this.$router.push('/mypage')
             })
+            .catch(() => {
+              this.$Progress.fail()
+            })
           } else {
+            this.$Progress.fail()
             console.log('User does not Exist !')
           }
         })
         .catch((err) => {
           console.log('error', err)
+          this.$Progress.fail()
         })
         return false
       }

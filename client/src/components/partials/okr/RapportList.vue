@@ -1,52 +1,50 @@
 <template v-if="rapports && rapports.length">
   <div class="content-container margin--none background--transparent" id="rl">
     <div class="content-title position--outside">
+      <div class="float--right">
+        <router-link :to="'/okr/'+okr.type+'/'+okr._id+'/rapport/create'" class="btn btn-primary">Create a new Rapport</router-link>
+      </div>
       <h2>Rapports</h2>
     </div>
     <div class="content-container wrap--content border--curved">
-      <div class="okr-rapportsList">
+      <div class="okr-rapportsList" v-if="rapports && rapports.length">
         <ul class="list-group list-group-flush">
           <li class="list-group-item" v-for="rapport in rapports">
-            <router-link :to="getRapportLink(rapport)">{{ rapport.text }}</router-link>
+            <router-link :to="getRapportLink(rapport)">{{ rapport.title }}</router-link>
           </li>
         </ul>
+      </div>
+      <div class="content-nodata" v-else>
+        <p>There is no rapports</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue'
   import moment from 'moment'
   export default {
     props: {
-      type: {
-        type: String,
-        required: false,
-        default: 'individual'
+      okr: {
+        type: Object,
+        required: true
       }
+    },
+    mounted() {
+      Vue.$service.okr.getOkrRapports(this.okr._id)
+      .then((data) => {
+        this.$store.dispatch('fetchOkrRapports', data)
+      })
     },
     computed: {
       rapports() {
-        let sample = function(id) {
-          return {
-            text: 'Rapport text '+id,
-            id: id
-          }
-        }
-        let data = [sample(1),sample(2),sample(3),sample(4),sample(5),sample(6),sample(7)]
-
-        return this.sort(data, 'text', false)
+        return this.$store.state.okr.okrRapports
       }
     },
     methods: {
-      sort(arr, key, desc)  {
-        if(!desc) {
-          return arr.sort(function(a,b) {return (a[key] > b[key]) ? 1 : ((b[key] > a[key]) ? -1 : 0);} );
-        }
-        return arr.sort(function(a,b) {return (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);} );
-      },
       getRapportLink(rapport) {
-        return '/okr/rapport/'+rapport.id
+        return '/okr/rapport/'+rapport._id
       }
     }
   }

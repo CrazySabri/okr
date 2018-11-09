@@ -14,17 +14,6 @@
                   <p class="okr-header_name">
                     <span>{{ currentOkr.name }}</span>
                   </p>
-                  <p class="okr-header_position">
-                    <span>{{ currentOkr.position }}</span>
-                  </p>
-                  <p class="okr-header_team">
-                    <template v-if="currentOkr.team">
-                      <span>{{ currentOkr.team.name }}</span>
-                    </template>
-                    <template v-else>
-                      <span class="text--unassigned">No assigned to a team</span>
-                    </template>
-                  </p>
                 </div>
                 <div class="clear--both"></div>
               </div>
@@ -55,13 +44,11 @@
                     <span class="text--count">{{ currentOkr.members && currentOkr.members.length ? currentOkr.members.length : '-' }}</span>
                   </div>
                 </template>
-                <template v-else-if="currentOkr.type == 'personal'">
-                  <div class="col-md-2">
-                    <h4>Rapports</h4>
-                    <span class="text--count">{{ currentOkr.rapports && currentOkr.rapports.length ? currentOkr.rapports.length : '-' }}</span>
-                  </div>
-                </template>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                  <h4>Rapports</h4>
+                  <span class="text--count">{{ rapports && rapports.length ? rapports.length : '-' }}</span>
+                </div>
+                <div class="col-md-2">
                   <h4>Progression</h4>
                   <span class="text--count">{{ currentOkr.progression ? currentOkr.progression+'%' : '-' }}</span>
                 </div>
@@ -93,17 +80,19 @@
                   <div :class="'col-md-'+colSize" v-for="(keyresult, index) in currentOkr.keyresults">
                     <div class="content-container wrap--content border--curved">
                       <h4>KR-{{ index+1 }}</h4>
-                      <p>{{ keyresult }}</p>
+                      <p>{{ keyresult.key }}、{{ keyresult.result }}</p>
                     </div>
                   </div>
                 </div>
               </template>
               <template v-else>
-                <p>Keys results is not set up</p>
+                <div class="content-container wrap--content border--curved">
+                  <p>Keys results is not set up</p>
+                </div>
               </template>
             </div>
             <todos-list></todos-list>
-            <rapport-list></rapport-list>
+            <rapport-list :okr="currentOkr"></rapport-list>
 
             <div class="content-title position--outside" id="tl">
               <h2>Timeline</h2>
@@ -123,7 +112,7 @@
   import moment from 'moment'
   import LayoutDefault from '@/components/layouts/LayoutDefault';
   import SidebarOkr from '@/components/partials/common/SidebarOkr';
-  import AppTimeline from '@/components/partials/okr/AppTimeline';
+  import AppTimeline from '@/modules/timeline/components/AppTimeline';
   import TodosList from '@/components/partials/okr/TodosList';
   import RapportList from '@/components/partials/okr/RapportList';
 
@@ -137,7 +126,8 @@
     },
     data() {
       return {
-        tab: 'active'
+        tab: 'active',
+        one: null
       }
     },
     props: {
@@ -163,33 +153,54 @@
         let date_end = this.currentOkr.date_end
         let date_start = this.currentOkr.date_start
 
-        let days = moment().diff(date_end, 'days')
+        let days = moment(date_end).diff(moment(), 'days')
+        days = days < 0 ? 0 : days
         return days;
       },
       currentOkr() {
-        let okr = this.$store.state.okr.oneFetched
+        let okr = this.one
         if(!okr) return null;
 
+        okr.keyresults = okr.keyresults.filter((kr) => {
+          return kr.key && kr.result
+        })
+
+        okr.date_start = moment(okr.date_start).format('YYYY/MM/DD')
+        okr.date_end = moment(okr.date_end).format('YYYY/MM/DD')
+
         return Object.assign({
-          id: 0,
-          date_start: moment.unix(1330475635).format('YYYY/MM/DD'),
-          date_end: moment.unix(1530479635).format('YYYY/MM/DD'),
           todos: [1,2,3,4,5,6],
           rapports: [],
           members: [], //if team
           groups: [], //if group
           progression: 100,
-          team: {
-            name: 'Team name'
-          }
         }, okr)
+      },
+      rapports() {
+        return this.$store.state.okr.okrRapports
+      }
+    },
+    watch: {
+      "$route" (to, from) {
+        this.onMounted()
       }
     },
     mounted() {
-      this.$store.dispatch('fetchOneOkr', {
-        id: this.id,
-        type: this.type
-      })
+      this.onMounted()
+    },
+    methods: {
+      onMounted() {
+        Vue.$api.get('/okr/get/'+this.type+'/'+this.id)
+        .then((response) => {
+          if(response.data) {
+            this.one = response.data
+
+            if(response.data.status !== 'confirmed') {
+              this.$router.push('/mypage')
+            }
+          }
+        })
+      }
     }
   }
 </script>

@@ -57,6 +57,11 @@
                 <p class="ui-input_error" v-if="$v.companyname.$error">入力された会社名は正しくありません。</p>
               </div>
               <div class="ui-form_group">
+                <label>会社コード</label>
+                <input class="ui-input--text" type="text" name="companycode" v-model="companycode" novalidate :class="[{'state--error' : $v.companyname.$error}]" />
+                <p class="ui-input_error" v-if="$v.companycode.$error">入力された会社コードは正しくありません。</p>
+              </div>
+              <div class="ui-form_group">
                 <button class="ui-btn--main thick--big size--fluid" @click.prevent="onSubmit(2)">次へ</button>
               </div>
             </form>
@@ -91,6 +96,7 @@
         lastname: '',
         firstname: '',
         companyname: 'none',
+        companycode: 'none',
         ownerId: ''
       }
     },
@@ -110,6 +116,9 @@
       },
       companyname: {
         required
+      },
+      companycode: {
+        required
       }
     },
     methods: {
@@ -121,42 +130,38 @@
 
         switch(this.step) {
           case 1:
+            this.companyname = ''
+            this.companycode = ''
+            this.step++
+            this.$v.$reset()
+            break;
+          case 2:
+            this.$Progress.start()
+
             Vue.$service.account.signup({
               email: this.email,
               password: this.password,
               firstname: this.firstname,
-              lastname: this.lastname
+              lastname: this.lastname,
+              position: 'admin',
+              role: 'admin',
+              company: {
+                name: this.companyname,
+                code: this.companycode
+              }
             })
             .then((response) => {
-              if(response.data.created) {
-                this.$v.$reset()
-                this.ownerId = response.data.doc._id
-                this.companyname = ''
+              if(response.created) {
                 this.step++
+                this.$Progress.finish()
               } else {
                 console.warn('Error', response.data.err)
+                this.$Progress.fail()
               }
             })
             .catch((err) => {
               console.warn('Error', err)
-            })
-            break;
-          case 2:
-            this.$v.$reset()
-            Vue.$service.company.create({
-              name: this.companyname,
-              ownerId: this.ownerId
-            })
-            .then((response) => {
-              if(response.data.created) {
-                this.step++
-                this.$router.push('/login');
-              } else {
-                console.warn('Error', response.data.err)
-              }
-            })
-            .catch((err) => {
-              console.warn('Error', err)
+              this.$Progress.fail()
             })
             break;
         }

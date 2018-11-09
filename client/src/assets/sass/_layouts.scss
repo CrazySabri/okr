@@ -2,8 +2,13 @@
   background: #309FF2;
   border-radius:0;
   margin: 0;
-  a {
+  > a {
     color: white;
+  }
+  .navbar-header {
+    a {
+      color:white;
+    }
   }
 }
 
@@ -59,6 +64,25 @@
   -ms-flex-align: center;
   align-items: center;
   margin-top: 60px;
+
+  &_sign {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-top: 49px;
+    transition: opacity .2s cubic-bezier(0,0,.58,1);
+    &:hover {
+      opacity: .6;
+      text-decoration: none;
+    }
+  }
+
+  &_designed-by {
+    font-size: 14px;
+    margin-right: 13px;
+    color: #383b47;
+  }
 
   &_links {
     display: -webkit-box;
@@ -127,6 +151,7 @@
   box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.02);
   + .content-container {
     margin-top:24px;
+    margin-bottom: 24px;
   }
   &.border--curved {
     border-radius: 12px;
@@ -200,5 +225,23 @@
         color: #309FF2;
       }
     }
+  }
+}
+
+.sub-content__container {
+  p {
+    font-size: 15px;
+    line-height: 1.86em;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 16px 0 20px;
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 32px 0 40px;
   }
 }

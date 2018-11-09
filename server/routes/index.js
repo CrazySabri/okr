@@ -13,5 +13,8 @@ module.exports = function(app) {
   require('./okr')(app);
   require('./company')(app);
   require('./team')(app);
+  require('./comment')(app);
+  require('./news')(app);
+  require('./contact')(app);
   app.use(router)
 }

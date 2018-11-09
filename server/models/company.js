@@ -5,6 +5,7 @@ var ObjectId = mongoose.Types.ObjectId;
 
 var CompanySchema = new Schema({
   name: { type: String, required: true },
+  code: { type: String, required: true, index: { unique: true }},
   ownerId: { type: Schema.ObjectId },
   members: [{
     _id: { type: Schema.ObjectId },
@@ -60,7 +61,8 @@ module.exports = {
             "membersList._id": 1,
             "membersList.profile": 1,
             "membersList.email": 1,
-            "membersList.date_created": 1
+            "membersList.date_created": 1,
+            "membersList.company": 1
           }
         },
       ], (err, doc) => {
@@ -91,12 +93,24 @@ module.exports = {
       })
     })
   },
+  getbycode: (code) => {
+    return new Promise((resolve, reject) => {
+      Model.find({
+        code: code
+      }, function(err, doc) {
+        if(err) {
+          reject(err)
+        } else {
+          if(doc && doc.length) {
+            resolve(doc[0])
+          } else {
+            resolve(null)
+          }
+        }
+      })
+    })
+  },
   create: (schema) => {
-    schema = Object.assign({
-      name: '',
-      ownerId: '',
-      members: []
-    }, schema)
 
     schema.ownerId = new ObjectId(schema.ownerId)
     schema.members = [{

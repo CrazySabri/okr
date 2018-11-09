@@ -1,13 +1,15 @@
 import Vue from 'vue'
+import Routes from './routes'
+import Store from './store'
 import CommentService from './services/Comment'
+import CommentMixins from './mixins/Comment'
 
-if(!('$service' in Vue)) {
-  Vue.$service = {}
+export default {
+  routes: Routes,
+  services: {
+    comment: new CommentService
+  },
+  stores: {
+    comment: Store
+  }
 }
-
-Vue.$service.comment = new CommentService
-
-import CommentMixins from './mixins/Comment.js';
-Vue.mixin(CommentMixins);
-
-export default {};

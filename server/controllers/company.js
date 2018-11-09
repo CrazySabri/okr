@@ -51,7 +51,6 @@ module.exports = {
     })
   },
   get: (id) => {
-
     return new Promise((resolve, reject) => {
 
       companyModel.get(id)
@@ -63,11 +62,23 @@ module.exports = {
       })
     })
   },
-  create: (req) => {
+  getbycode: (code) => {
+    return new Promise((resolve, reject) => {
+
+      companyModel.getbycode(code)
+      .then((doc) => {
+        resolve(doc)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  create: (params) => {
     let schema = {
-      name: req.body.name,
-      ownerId: req.body.ownerId,
-      companyId: req.body.companyId
+      name: params.name,
+      ownerId: params.ownerId,
+      code: params.code
     }
 
     return new Promise((resolve, reject) => {

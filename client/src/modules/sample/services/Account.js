@@ -14,15 +14,13 @@ export default function() {
       })
     },
     getAccountListByCompanyId() {
-      return;
       return new Promise((resolve, reject) => {
         Vue.$api.get('/account/list')
         .then((response) => {
-          store.dispatch('fetchAccounts', response.data.list)
-          resolve()
+          resolve(response.data)
         })
         .catch((err) => {
-          reject()
+          reject(err)
         })
       })
     }

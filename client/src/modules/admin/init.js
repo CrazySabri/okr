@@ -1,13 +1,18 @@
 import Vue from 'vue'
+import Routes from './routes'
+import Store from './store'
 import AdminService from './services/Admin'
+import AdminMixins from './mixins/Admin';
 
-if(!('$service' in Vue)) {
-  Vue.$service = {}
+export default {
+  routes: Routes,
+  mixins: {
+    admin: AdminMixins
+  },
+  services: {
+    admin: new AdminService
+  },
+  stores: {
+    admin: Store
+  }
 }
-
-Vue.$service.admin = new AdminService
-
-import AdminMixins from './mixins/Admin.js';
-Vue.mixin(AdminMixins);
-
-export default {};

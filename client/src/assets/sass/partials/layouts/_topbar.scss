@@ -1,0 +1,135 @@
+.topbar-name {
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+  padding: 0 10px 0 20px;
+  cursor: pointer;
+  span {
+    padding-left: 10px;
+    font-size: 12px;
+  }
+  &:hover {
+    background: rgba(255,255,255,0.06);
+  }
+}
+.topbar-alert {
+  position: relative;
+  line-height: 50px;
+  color: #fff;
+  border-left: 1px solid rgba(255,255,255,0.4);
+  border-right: 1px solid rgba(255,255,255,0.4);
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    background: rgba(255,255,255,0.06);
+  }
+}
+.topbar-question {
+  line-height: 50px;
+  color: #fff;
+  border-left: 1px solid rgba(255,255,255,0.4);
+  border-right: 1px solid rgba(255,255,255,0.4);
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+  a {
+    color: #fff;
+    display: block;
+  }
+  &:hover {
+    background: rgba(255,255,255,0.06);
+  }
+}
+
+.header-menu--container {
+  width: 280px;
+  height: auto;
+  position: absolute;
+  top: 68px;
+  right: 0;
+  z-index: 999;
+  .content-container {
+    box-shadow:0 0 24px 0 rgba(0,0,0,0.2);
+  }
+}
+
+.topbar-img {
+  padding: 10px 0 5px 0;
+  cursor: pointer;
+  &:hover {
+    background: #fafafa;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  & + hr {
+    margin: 10px 0;
+  }
+}
+.topbar-menu {
+  border-radius: 12px;
+  background: #fafafa;
+  width: 45%;
+  margin: 2.5%;
+  float: left;
+  padding: 10px 0 5px 0;
+  cursor: pointer;
+  &:hover {
+    background: #f7f8fb;
+  }
+  a {
+    color: #333;
+    text-decoration: none;
+  }
+}
+.topbar-menu--title h4{
+  font-size: 12px;
+  color: #888;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.header-notification--container {
+  width: 370px;
+  height: auto;
+  position: absolute;
+  top: 68px;
+  right: 220px;
+  z-index: 999;
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+.notification-item--wrapper {
+  margin: 0;
+  padding: 15px 0px 0 0px;
+  list-style: none;
+}
+.notification-item {
+  padding: 10px 30px;
+  border-bottom: 1px dotted #dadde6;
+  word-wrap: break-word;
+}
+.notification-item:last-of-type {
+  border: none;
+}
+.notification-close {
+  text-align: center;
+  padding: 10px 0;
+  color: #309FF2;
+  cursor: pointer;
+}
+.navbar-icon {
+  font-size: 16px;
+}
+.navbar-icon--notification {
+  position: absolute;
+  color: #fff;
+  font-size: 8px;
+  top: 8px;
+  right: 8px;
+}

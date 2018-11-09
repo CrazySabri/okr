@@ -15,7 +15,7 @@ const state = {
   isLoggedIn: false,
   loggedInUser: false,
   list: [],
-  oneFetched: null
+  entities: []
 }
 
 const getters = {
@@ -24,6 +24,25 @@ const getters = {
       return state.loggedInUser._id
     }
     return false
+  },
+  getLoggedInAccountRole: state => {
+    if(state.loggedInUser.role) {
+      return state.loggedInUser.role
+    }
+    else if(state.loggedInUser.company) {
+      return state.loggedInUser.company.role
+    }
+    return null
+  },
+  loggedInUser: state => {
+    return state.loggedInUser
+  },
+  getAccount: state => {
+    return userId => {
+      return state.entities.find((x) => {
+        return x._id === userId
+      })
+    }
   }
 }
 
@@ -56,26 +75,11 @@ const actions = {
       commit(REFRESH_LOGIN, JSON.parse(check))
     }
   },
-  fetchAccounts({commit}, list) {
-    return new Promise((resolve, reject) => {
-      Vue.$api.get('/account/list')
-      .then((response) => {
-        commit(FETCH_ACCOUNTS, response.data)
-        resolve()
-      })
-      .catch((err) => {
-        reject()
-      })
-    })
+  fetchAccounts({commit}, data) {
+    commit(FETCH_ACCOUNTS, data)
   },
-  fetchOneAccount({commit}, id) {
-    return new Promise(resolve => {
-      Vue.$api.get('/account/get/'+id)
-      .then((response) => {
-        commit(FETCH_ONE_ACCOUNT, response.data)
-        resolve();
-      });
-    });
+  fetchOneAccount({commit}, data) {
+    commit(FETCH_ONE_ACCOUNT, data)
   }
 }
 
@@ -97,7 +101,15 @@ const mutations = {
     state.list = list
   },
   [FETCH_ONE_ACCOUNT](state, user) {
-    state.oneFetched = user
+    if(user) {
+      let i = state.entities.findIndex((x) => {
+        return x._id === data._id
+      })
+      if(i >= 0) {
+        state.entities.splice(i, 1)
+      }
+      state.entities.push(user)
+    }
   }
 }
 
